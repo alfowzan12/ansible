@@ -17,7 +17,7 @@
         dest=/etc/sudoers
         state:present
         regexp='^%wheel'
-	line: '%wheel ALL=(ALL) NOPASSWD : ALL'
+line: '%wheel ALL=(ALL) NOPASSWD : ALL'
 
     - name : add manager with sudo privliges
       user: name=manager groups=wheel append=yes state=present createhome=yes
@@ -26,10 +26,10 @@
     - name : install packages mtr, tcpdump , nano and cowsay.
       yum: state=present name={{ items }}
       with items:
-	-mtr
-	-tcpdump
-	-nano
-	-cowsay
+-mtr
+-tcpdump
+-nano
+-cowsay
 - nmcli:
     conn_name: my-eth1
     dns4:
