@@ -2,9 +2,9 @@
  tasks:
    - name: open iptables
      lineinfile: dest=/etc/sysconfig/iptables
-		 regexp="^-A INPUT -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT$"
-		 line="-A -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT"
-		 insertafter="^:OUTPUT ACCEPT \[\d*:\d*\]$"
+	regexp="^-A INPUT -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT$"
+	line="-A -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT"
+	insertafter="^:OUTPUT ACCEPT \[\d*:\d*\]$"
      with_items:
        - { protocol: tcp, port: 21 }
        - { protocol: tcp, port: 22 }
@@ -23,9 +23,9 @@
  tasks:
    - name: open ports on tiny-centos7 
      lineinfile: dest=/etc/sysconfig/iptables
-		 regexp="^-A INPUT -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT$"
-		 line="-A -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT"
-		 insertafter="^:OUTPUT ACCEPT \[\d*\]$"
+	regexp="^-A INPUT -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT$"
+	line="-A -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT"
+	insertafter="^:OUTPUT ACCEPT \[\d*\]$"
      with_items:
        - { protocol: tcp, port: 25 }
        - { protocol: tcp, port: 110 }
