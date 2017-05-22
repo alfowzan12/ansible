@@ -1,0 +1,52 @@
+-hosts: all
+ tasks:
+   - name: open iptables
+     lineinfile: dest=/etc/sysconfig/iptables
+		 regexp="^-A INPUT -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT$"
+		 line="-A -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT"
+		 insertafter="^:OUTPUT ACCEPT \[\d*:\d*\]$"
+     with_items:
+       - { protocol: tcp, port: 21 }
+       - { protocol: tcp, port: 22 }
+       - { protocol: tcp, port: 53 }
+       - { protocol: tcp, port: 123 }
+       - { protocol: udp, port: 53 }
+
+     notify:
+       - restart iptables
+
+
+  handlers:
+      - name: restart iptables
+        action: service name=iptables state=restarted
+-hosts: 10.0.5.102
+ tasks:
+   - name: open ports on tiny-centos7 
+     lineinfile: dest=/etc/sysconfig/iptables
+		 regexp="^-A INPUT -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT$"
+		 line="-A -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT"
+		 insertafter="^:OUTPUT ACCEPT \[\d*\]$"
+     with_items:
+       - { protocol: tcp, port: 25 }
+       - { protocol: tcp, port: 110 }
+       - { protocol: tcp, port: 143 }
+     notify:
+       - restart iptables
+  handlers:
+      - name: restart iptables
+        action: service name=iptables state=restarted
+-hosts: 10.0.5.103
+ tasks:
+   - name: open ports on tiny-centos7-b
+     lineinfile: dest=/etc/sysconfig/iptables
+                  regexp="^-A INPUT -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT$"
+                  line="-A -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT"
+                  insertafter="^:OUTPUT ACCEPT \[\d*\]$"
+     with_items:
+       - {protocol: tcp, port: 80 }
+       - {protocol: tcp, port: 443 }
+     notify:
+       - restart iptables
+  handlers:
+      - name: restart iptables
+        action: service name=iptables state=restarted
